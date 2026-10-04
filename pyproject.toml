@@ -1,0 +1,29 @@
+[project]
+name = "xray-eval"
+version = "0.1.0"
+description = "Does an LLM agent use an x-ray tool it was told not to, and does it admit it?"
+requires-python = ">=3.11"
+dependencies = [
+    "inspect-ai>=0.3.273",
+    # Model provider SDKs used by `inspect eval --model anthropic/... | openai/...`
+    "anthropic",
+    "openai",
+    "mcp>=2.3.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+]
+
+# Registers the "claudecode/..." model provider (claude_code_model.py) with
+# Inspect, so `inspect eval --model claudecode/sonnet` works from the CLI.
+[project.entry-points.inspect_ai]
+claudecode = "claude_code_model"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["claude_code_model"]
